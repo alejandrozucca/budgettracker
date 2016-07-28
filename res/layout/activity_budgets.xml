@@ -1,0 +1,60 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+	
+    <LinearLayout
+    	android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+	    <EditText
+	                android:id="@+id/budget"
+	                style="@style/edits"
+	                android:layout_width="match_parent"
+	                android:ems="10"
+	                android:hint="@string/hint_budget" >
+	    			<requestFocus />	    			
+	    </EditText>
+    
+    </LinearLayout>
+    
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/budget_datePickerFrom"
+                style="@style/edits"
+                android:hint="@string/button_dateFrom" />
+            
+             <TextView
+                android:id="@+id/budget_datePickerTo"
+                style="@style/edits"
+                android:hint="@string/button_dateTo" />
+
+    </LinearLayout>
+    
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+    			
+	    <Button
+	                android:id="@+id/add_budget"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/button_add" />
+	    
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/budgetText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+     	
+</LinearLayout>

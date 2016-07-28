@@ -1,0 +1,72 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+	
+    <LinearLayout
+    	android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+	    <EditText
+	                android:id="@+id/newMethod"
+	                style="@style/edits"
+	                android:layout_width="match_parent"
+	                android:ems="10"
+	                android:hint="@string/hint_method" >
+	    			<requestFocus />
+	    			
+	    </EditText>
+    
+    </LinearLayout>
+    
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
+    			
+	    <Button
+	                android:id="@+id/add_method"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/button_add" />
+	    
+    </LinearLayout>
+     
+	     <TableRow
+	         android:layout_width="match_parent"
+	         android:layout_height="wrap_content"
+	         android:gravity="center_vertical"
+	         android:background="#ffffff">
+	      
+	            <TextView
+	                style="@style/textViews"
+	                android:text="@string/table_id"
+	                android:layout_weight="0"/>
+	
+	            <TextView
+	                style="@style/textViews"
+	                android:layout_weight="1"
+	                android:text="@string/table_methodLong"/>
+	
+	    </TableRow>
+	                 
+	    <ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="match_parent"
+			android:background="#efefef" >
+	                
+			<TableLayout
+				android:id="@+id/methods_table"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:stretchColumns="1"
+				android:background="#ffffff">
+			</TableLayout>
+			
+		</ScrollView>
+		
+</LinearLayout>

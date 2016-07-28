@@ -1,0 +1,55 @@
+<resources>
+
+    <color name="c3">#8ac7ee</color>
+    <color name="c2">#e5efff</color>
+    <color name="c1">#f2bd2a</color>
+    <color name="silver">#cccccc</color>
+    <color name="link">#88bbdd</color>
+
+    <style name="aletheme" parent="android:Theme.DeviceDefault.Light.DarkActionBar">
+        <!--item name="android:windowBackground">@drawable/background</item-->
+        <item name="android:buttonStyle">@style/buttons</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="edits" parent="aletheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/textfields</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:ems">5</item>
+    </style>
+    
+    <style name="spinners" parent="aletheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/textfields</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:ems">5</item>
+    </style>
+
+    <style name="buttons" parent="aletheme">
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:background">@drawable/buttons</item>
+    </style>
+    
+    <style name="textViews" parent="aletheme">
+    	<item name="android:padding">5dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@color/silver</item>
+        <item name="android:textColor">@color/c2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">0dp</item>
+       	<item name="android:layout_height">40dp</item>
+    </style>
+
+</resources>

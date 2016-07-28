@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Budget Tracker</string>
+    <string name="hint_product">Qué compraste?</string>
+    <string name="hint_price">Precio?</string>
+    <string name="hint_method">Forma de pago?</string>
+    <string name="hint_budget">Cuánto pensás gastar?</string>
+    <string name="button_add">+</string>
+    <string name="button_ok">ok</string>
+    <string name="button_clear">X</string>
+    <string name="button_edit">Editar</string>
+    <string name="button_delete">Borrar</string>
+    <string name="button_date">Fecha</string>
+    <string name="button_time">Hora</string>
+    <string name="button_dateFrom">Desde?</string>
+    <string name="button_dateTo">Hasta?</string>
+    <string name="table_id">ID</string>
+    <string name="table_product">Producto</string>
+    <string name="table_method">Pago</string>    
+    <string name="table_price">Precio</string>
+    <string name="table_date">Fecha</string>
+    <string name="table_methodLong">Formas de pago</string>
+    <string name="action_settings">Formas de pago</string>
+    <string name="title_activity_settings">Formas de pago</string>
+    <string name="action_search">Search</string>
+    <string name="menu_settings">Formas de Pago</string>
+    <string name="menu_home">Mis Gastos</string>
+    <string name="menu_budgets">Mis Presupuestos</string>
+
+</resources>
