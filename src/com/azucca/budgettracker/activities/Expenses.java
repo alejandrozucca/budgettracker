@@ -1,4 +1,4 @@
-package com.azucca.budgettracker;
+package com.azucca.budgettracker.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -22,7 +22,11 @@ import android.widget.TimePicker;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MainActivity extends BudgetTrackerActivity {
+import com.azucca.budgettracker.R;
+import com.azucca.budgettracker.entities.Expense;
+import com.azucca.budgettracker.entities.PaymentMethod;
+
+public class Expenses extends BudgetTrackerActivity {
 
     private Spinner dropdown;
     private EditText productName;
@@ -238,7 +242,7 @@ public class MainActivity extends BudgetTrackerActivity {
     }
     
     private void viewExpenseList(){
-        startActivity(new Intent(this, ExpenseList.class));
+        startActivity(new Intent(this, Search.class));
     }
 
 }

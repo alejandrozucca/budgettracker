@@ -1,6 +1,10 @@
-package com.azucca.budgettracker;
+package com.azucca.budgettracker.activities;
 
 import java.util.Calendar;
+
+import com.azucca.budgettracker.R;
+import com.azucca.budgettracker.entities.Budget;
+import com.azucca.budgettracker.entities.Expense;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;

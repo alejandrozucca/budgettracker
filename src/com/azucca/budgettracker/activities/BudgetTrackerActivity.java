@@ -1,9 +1,11 @@
-package com.azucca.budgettracker;
+package com.azucca.budgettracker.activities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.azucca.budgettracker.R;
 import com.azucca.budgettracker.db.DBHelper;
+import com.azucca.budgettracker.entities.Expense;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -62,7 +64,7 @@ public class BudgetTrackerActivity extends Activity {
     }
 	
 	public void goToHome(){
-		startActivity(new Intent(this, MainActivity.class));
+		startActivity(new Intent(this, Expenses.class));
 	}
 	
 	public void goToSettings(){

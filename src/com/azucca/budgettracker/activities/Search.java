@@ -1,6 +1,10 @@
-package com.azucca.budgettracker;
+package com.azucca.budgettracker.activities;
 
 import java.util.Calendar;
+
+import com.azucca.budgettracker.R;
+import com.azucca.budgettracker.entities.Expense;
+
 import android.app.DatePickerDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +18,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ExpenseList extends BudgetTrackerActivity {
+public class Search extends BudgetTrackerActivity {
 		
 	private Button search;
 	private Button clear;

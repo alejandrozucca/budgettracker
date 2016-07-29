@@ -1,4 +1,7 @@
-package com.azucca.budgettracker;
+package com.azucca.budgettracker.activities;
+
+import com.azucca.budgettracker.R;
+import com.azucca.budgettracker.entities.PaymentMethod;
 
 import android.os.Bundle;
 import android.view.Gravity;

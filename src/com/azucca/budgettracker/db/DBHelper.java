@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import com.azucca.budgettracker.Budget;
-import com.azucca.budgettracker.Expense;
-import com.azucca.budgettracker.PaymentMethod;
+import com.azucca.budgettracker.entities.Budget;
+import com.azucca.budgettracker.entities.Expense;
+import com.azucca.budgettracker.entities.PaymentMethod;
 import com.azucca.budgettracker.tables.Budgets;
 import com.azucca.budgettracker.tables.Expenses;
 import com.azucca.budgettracker.tables.Payments;

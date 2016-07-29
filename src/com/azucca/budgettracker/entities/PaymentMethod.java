@@ -1,4 +1,4 @@
-package com.azucca.budgettracker;
+package com.azucca.budgettracker.entities;
 
 public class PaymentMethod {
 	
