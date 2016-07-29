@@ -38,7 +38,7 @@ public class ExpenseList extends BudgetTrackerActivity {
 	        searchFrom.setText(getDate());
 	        searchTo.setText(getDate());
 	        
-	        for(Expense e : db.getMore(999999))
+	        for(Expense e : db.getMoreExpenses(999999))
 	        		addToTable(e, -1);
 	        updateColors();
 	        
@@ -130,10 +130,10 @@ public class ExpenseList extends BudgetTrackerActivity {
     }
 	
 	private void loadMore(){
-		for(Expense e: db.getMore(lastId)){
+		for(Expense e: db.getMoreExpenses(lastId)){
 			addToTable(e,results.getChildCount() - 1);			
 		}
-		if(db.getMore(lastId).size() <= 0)
+		if(db.getMoreExpenses(lastId).size() <= 0)
 			results.removeViewAt(results.getChildCount() -1);
 	}
 		 
@@ -163,7 +163,7 @@ public class ExpenseList extends BudgetTrackerActivity {
 	 
 	 public void searchExpenses(){		 
 		 results.removeAllViews();
-		 for(Expense e : db.search(
+		 for(Expense e : db.searchExpenses(
 				 db.parseDate(searchFrom.getText().toString() + " 00:00"), 
 				 db.parseDate(searchTo.getText().toString() + " 23:59"))){
 			 addToTable(e, -1);
@@ -178,7 +178,7 @@ public class ExpenseList extends BudgetTrackerActivity {
 	     searchFrom.setText(getDate());
 	     searchTo.setText(getDate());
 	     results.removeAllViews();
-	     for(Expense e : db.getMore(999999))
+	     for(Expense e : db.getMoreExpenses(999999))
      		addToTable(e, -1);
 	     updateColors();
 	 }

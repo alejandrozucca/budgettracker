@@ -31,10 +31,10 @@ public class Budgets extends BudgetTrackerActivity {
         budgetTo = (TextView) findViewById(R.id.budget_datePickerTo);
         budgetText = (TextView) findViewById(R.id.budgetText);
        
-        Budget existingBudget = db_bds.getBudget(0);
+        Budget existingBudget = db.getBudget(0);
         if(existingBudget != null){
         	float exp = 0f;
-    		for(Expense e : db.search(				
+    		for(Expense e : db.searchExpenses(				
     				 existingBudget.getDateFrom(), 
     				 existingBudget.getDateTo()	
     				))
@@ -68,7 +68,7 @@ public class Budgets extends BudgetTrackerActivity {
 	
 	public void updateBudget(){
 		float exp = 0f;
-		for(Expense e : db.search(				
+		for(Expense e : db.searchExpenses(				
 				 db.parseDate(budgetFrom.getText().toString() + " 00:00"), 
 				 db.parseDate(budgetTo.getText().toString() + " 23:59")				
 				))
@@ -78,14 +78,14 @@ public class Budgets extends BudgetTrackerActivity {
 				" hasta " + budgetTo.getText().toString()
 				+ " y llevas gastado " + exp);
 		
-		if(db_bds.getAllBudgets().size() == 0)
-			db_bds.addBudget(new Budget(0,
+		if(db.getAllBudgets().size() == 0)
+			db.addBudget(new Budget(0,
 					db.parseDate(budgetFrom.getText().toString() + " 00:00"),
 					db.parseDate(budgetTo.getText().toString() + " 23:59"),
 					Float.parseFloat(textField.getText().toString()))
 			);
 		else
-			db_bds.editBudget(new Budget(0,
+			db.editBudget(new Budget(0,
 					db.parseDate(budgetFrom.getText().toString() + " 00:00"),
 					db.parseDate(budgetTo.getText().toString() + " 23:59"),
 					Float.parseFloat(textField.getText().toString()))
@@ -114,6 +114,6 @@ public class Budgets extends BudgetTrackerActivity {
 					}
 				}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 	    	dateToDialog.show();
-	    }
+	 }
 		
 }

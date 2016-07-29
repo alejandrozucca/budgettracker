@@ -1,5 +1,7 @@
 package com.azucca.budgettracker;
 
+import com.azucca.budgettracker.db.DBHelper;
+
 import android.app.Application;
 
 public class BudgetTracker extends Application {

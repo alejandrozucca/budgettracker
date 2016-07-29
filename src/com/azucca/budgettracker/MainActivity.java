@@ -41,7 +41,7 @@ public class MainActivity extends BudgetTrackerActivity {
         setContentView(R.layout.activity_main);
 
         int pi = 0;
-        ArrayList<PaymentMethod> methods = db_pys.getAll();
+        ArrayList<PaymentMethod> methods = db.getAllPayments();
         items = new String[methods.size()];
         for(PaymentMethod p : methods)
         	items[pi++] = p.getName();
@@ -60,7 +60,7 @@ public class MainActivity extends BudgetTrackerActivity {
         date.setText(getDate());
         time.setText(getTime());
         
-        for(Expense e : db.getMore(999999))
+        for(Expense e : db.getMoreExpenses(999999))
     		addToTable(e, -1);  
         updateColors();
         
@@ -71,7 +71,7 @@ public class MainActivity extends BudgetTrackerActivity {
                         addToTable(createExpense(), 0);
                         updateColors();
                     } else {
-                        db.edit(new Expense(
+                        db.editExpense(new Expense(
                                 Integer.parseInt(getChildren(selectedView).get(0).getText().toString()),
                                 productName.getText().toString(),
                                 dropdown.getSelectedItem().toString(),
@@ -134,13 +134,13 @@ public class MainActivity extends BudgetTrackerActivity {
 
     public Expense createExpense(){
         Expense e = new Expense(
-                db.getNextId(),
+                db.getNextExpenseId(),
                 productName.getText().toString(),
                 dropdown.getSelectedItem().toString(),
                 Float.parseFloat(price.getText().toString()),
                 date.getText().toString() + " " + time.getText().toString()
         );
-        if(db.add(e) == -1)
+        if(db.addExpense(e) == -1)
             e = null;
         productName.setText("");
         price.setText("");

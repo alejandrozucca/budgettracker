@@ -3,6 +3,8 @@ package com.azucca.budgettracker;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.azucca.budgettracker.db.DBHelper;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,8 +23,6 @@ import android.widget.TextView;
 public class BudgetTrackerActivity extends Activity {
 	
 	protected DBHelper db;
-	protected DB_Payments db_pys;
-	protected DB_Budgets db_bds;
 	protected Point size;	
 	protected String[] items;
 	protected TableLayout results;
@@ -34,10 +34,6 @@ public class BudgetTrackerActivity extends Activity {
 		super.onCreate(savedInstanceState);		
 		if(db == null)
         	db = new DBHelper(this);
-		if(db_pys == null)
-        	db_pys = new DB_Payments(this);
-		if(db_bds == null)
-        	db_bds = new DB_Budgets(this);    
         Display display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);      
@@ -140,7 +136,7 @@ public class BudgetTrackerActivity extends Activity {
 	}
 	
 	public void deleteExpense() {
-	    db.delete(Integer.parseInt(getChildren(selectedView).get(0).getText().toString()));
+	    db.deleteExpense(Integer.parseInt(getChildren(selectedView).get(0).getText().toString()));
 	    results.removeView(selectedView);
 	    updateColors();
 	}

@@ -26,8 +26,8 @@ public class Settings extends BudgetTrackerActivity {
 		results = (TableLayout) findViewById(R.id.methods_table);
 		textField = (EditText) findViewById(R.id.newMethod);
 		
-		//db_pys.deleteAll();
-		for(PaymentMethod p : db_pys.getAll())
+		//db.deleteAll();
+		for(PaymentMethod p : db.getAllPayments())
 			addPaymentMethod(p);
 		updateColors();
 		
@@ -36,13 +36,13 @@ public class Settings extends BudgetTrackerActivity {
 			public void onClick(View v) {
 				if(textField.getText().length() > 0){
 					if(add.getText().toString().compareTo(getResources().getString(R.string.button_add)) == 0){
-						PaymentMethod n = new PaymentMethod(db_pys.getNextId(), textField.getText().toString());
-						if (db_pys.add(n.getId(), n.getName()) != -1)
+						PaymentMethod n = new PaymentMethod(db.getNextPaymentId(), textField.getText().toString());
+						if (db.addPayment(n.getId(), n.getName()) != -1)
 							addPaymentMethod(n);
 						updateColors();
 						textField.setText("");
 					} else {
-						db_pys.edit(selectedMethod.getId(), textField.getText().toString());
+						db.editPayment(selectedMethod.getId(), textField.getText().toString());
 						getChildren(selectedView).get(1).setText(textField.getText().toString());
 						textField.setText("");
 						updateColors();
@@ -106,13 +106,13 @@ public class Settings extends BudgetTrackerActivity {
 	
 	public void editMethod() {
     	selectedView.setBackgroundColor(getResources().getColor(R.color.c1));
-        selectedMethod = db_pys.getMethod(Integer.parseInt(getChildren(selectedView).get(0).getText().toString()));
+        selectedMethod = db.getMethod(Integer.parseInt(getChildren(selectedView).get(0).getText().toString()));
         textField.setText(selectedMethod.getName());        
         add.setText(getResources().getString(R.string.button_ok));
     }
 	
 	public void deleteMethod(){
-		db_pys.delete(Integer.parseInt(getChildren(selectedView).get(0).getText().toString()));
+		db.deletePayment(Integer.parseInt(getChildren(selectedView).get(0).getText().toString()));
 	    results.removeView(selectedView);
 	    updateColors();
 	}
