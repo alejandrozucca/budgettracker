@@ -110,7 +110,7 @@ public class BudgetTrackerActivity extends Activity {
         return row;        
 	}
 	
-	public TableRow createRow(Budget e){
+	public TableRow createRow(Budget e, float spent){
 		int height = 40;
         TextView id = new TextView(this);        
         TextView method = new TextView(this);
@@ -131,9 +131,10 @@ public class BudgetTrackerActivity extends Activity {
         to.setText(t.substring(0, t.length() - 5));
         to.setWidth((int)(size.x * 0.2));
         to.setHeight(height);        
-        left.setText("" + e.getAmount());
+        left.setText("" + (e.getAmount() - spent));
         left.setWidth((int)(size.x * 0.3));
         left.setHeight(height);
+        left.setTextColor(e.getStatus(spent));
         TableRow row = new TableRow(this);
         row.setPadding(10, 15, 10, 15);
         row.setGravity(Gravity.CENTER_VERTICAL);

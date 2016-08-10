@@ -80,13 +80,14 @@ public class Budgets extends BudgetTrackerActivity {
 					if(add.getText().toString().compareTo(getResources().getString(R.string.button_add)) == 0){
 						addToTable(addBudget(),0);						
 				} else {
-					db.editBudget(new Budget(
-								selectedBudget.getId(),
-								dropdown.getSelectedItem().toString(),
-								budgetFrom.getText().toString() + " 00:00",
-								budgetTo.getText().toString() + " 23:59",
-								Float.parseFloat(textField.getText().toString())
-							));
+					Budget e = new Budget(
+							selectedBudget.getId(),
+							dropdown.getSelectedItem().toString(),
+							budgetFrom.getText().toString() + " 00:00",
+							budgetTo.getText().toString() + " 23:59",
+							Float.parseFloat(textField.getText().toString())
+						);
+					db.editBudget(e);
 					getChildren(selectedView).get(1).setText(dropdown.getSelectedItem().toString());
                     getChildren(selectedView).get(2).setText(budgetFrom.getText().toString().substring(0, budgetFrom.getText().toString().length() - 5));
                     getChildren(selectedView).get(3).setText(budgetTo.getText().toString().substring(0, budgetTo.getText().toString().length() - 5));
@@ -96,7 +97,8 @@ public class Budgets extends BudgetTrackerActivity {
         					 db.parseDateToDB(budgetTo.getText().toString() + " 23:59")				
         					))
         				exp += x.getPrice();
-                    getChildren(selectedView).get(4).setText("" + (Float.parseFloat(textField.getText().toString()) - exp));                    
+                    getChildren(selectedView).get(4).setText("" + (e.getAmount() - exp));
+                    getChildren(selectedView).get(4).setTextColor(e.getStatus(exp));
                     add.setText(getResources().getString(R.string.button_add));
 				}
 				clear();
@@ -192,15 +194,14 @@ public class Budgets extends BudgetTrackerActivity {
 	    	dateToDialog.show();
 	 }
 	 
-	 public void addToTable(Budget e, int position){
+	 public void addToTable(Budget e, int position){		
 			float exp = 0f;
 			for(Expense x : db.searchExpenses(				
 					 db.parseDateToDB(e.getDateFrom()), 
 					 db.parseDateToDB(e.getDateTo())				
 					))
-				exp += x.getPrice();
-			e.setAmount(e.getAmount() - exp);	
-	    	TableRow row = createRow(e);
+				exp += x.getPrice();						
+	    	TableRow row = createRow(e, exp);
 	    	row.setOnLongClickListener(new View.OnLongClickListener() {
 	            @Override
 	            public boolean onLongClick(View v) {
