@@ -36,6 +36,17 @@
                 android:hint="@string/button_dateTo" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+             
+        <Spinner
+                style="@style/spinners"
+                android:id="@+id/methodBudget"
+                android:layout_width="0dp"
+                android:layout_weight=".50"  />
+    </LinearLayout>
     
     <LinearLayout
             android:orientation="horizontal"
@@ -44,17 +55,69 @@
             android:padding="5dp" >
     			
 	    <Button
-	                android:id="@+id/add_budget"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="@string/button_add" />
+	        android:id="@+id/add_budget"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/button_add" />
+	    
+	    <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+	    
+	    <Button
+            android:id="@+id/clear_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_clear" />
 	    
     </LinearLayout>
+   
+    <TableRow
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_vertical"
+         android:background="#ffffff">
+      
+            <TextView
+                style="@style/textViews"
+                android:text=""
+                android:layout_weight="0"/>
 
-    <TextView
-        android:id="@+id/budgetText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" />
+            <TextView
+                style="@style/textViews"
+                android:text="@string/report_method"
+                android:layout_weight="0.3"/>
+            
+            <TextView
+                style="@style/textViews"
+                android:layout_weight="0.2"
+                android:text="@string/report_from"/>
+
+            <TextView
+                style="@style/textViews"
+                android:text="@string/report_to"               
+                android:layout_weight="0.2"/>
+            
+            <TextView
+                style="@style/textViews"
+                android:text="@string/report_available"
+                android:layout_weight="0.3"/>
+
+    </TableRow>
+                   
+		<ScrollView
+			android:layout_width="fill_parent"
+			android:layout_height="match_parent"
+			android:background="#efefef" >
+                
+			<TableLayout
+				android:id="@+id/budget_results"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:stretchColumns="1"
+				android:background="#ffffff">
+			</TableLayout>
+				    
+		</ScrollView>
      	
 </LinearLayout>

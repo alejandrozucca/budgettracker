@@ -27,5 +27,9 @@
     <string name="menu_settings">Formas de Pago</string>
     <string name="menu_home">Mis Gastos</string>
     <string name="menu_budgets">Mis Presupuestos</string>
+    <string name="report_method">Pago</string>
+    <string name="report_from">Desde</string>    
+    <string name="report_to">Hasta</string>
+    <string name="report_available">Queda</string>
 
 </resources>

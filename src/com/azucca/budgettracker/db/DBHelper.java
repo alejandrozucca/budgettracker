@@ -52,7 +52,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return id;
     }
     
-    public String parseDate(String dateTime){
+    public String parseDateToDB(String dateTime){
+    	System.out.println(dateTime);
     	String date = dateTime.split(" ")[0];
     	String time = dateTime.split(" ")[1];
     	String year = date.split("/")[2];
@@ -61,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
     	return year + "-" + month + "-" + day + " " + time;
     }
     
-    public String parseDate2(String dateTime){
+    public String parseDateFromDB(String dateTime){
     	String date = dateTime.split(" ")[0];
     	String time = dateTime.split(" ")[1];
     	String year = date.split("-")[0];
@@ -78,7 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(Expenses.PRODUCTNAME, expense.getProductName());
         values.put(Expenses.METHOD, expense.getMethod());
         values.put(Expenses.PRICE, expense.getPrice());
-        values.put(Expenses.DATE, parseDate(expense.getDate()));
+        values.put(Expenses.DATE, parseDateToDB(expense.getDate()));
         SQLiteDatabase db = getWritableDatabase();
         insert = db.insert(Expenses.TABLE_NAME, null, values);
         db.close();
@@ -105,7 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     c.getString(c.getColumnIndex(Expenses.PRODUCTNAME)),
                     c.getString(c.getColumnIndex(Expenses.METHOD)),
                     c.getFloat(c.getColumnIndex(Expenses.PRICE)),
-                    parseDate2(c.getString(c.getColumnIndex(Expenses.DATE)))
+                    parseDateFromDB(c.getString(c.getColumnIndex(Expenses.DATE)))//testing
             ));
             System.out.println(c.getString(c.getColumnIndex(Expenses.DATE)));
             c.moveToNext();
@@ -127,7 +128,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     c.getString(c.getColumnIndex(Expenses.PRODUCTNAME)),
                     c.getString(c.getColumnIndex(Expenses.METHOD)),
                     c.getFloat(c.getColumnIndex(Expenses.PRICE)),
-                    parseDate2(c.getString(c.getColumnIndex(Expenses.DATE)))
+                    parseDateFromDB(c.getString(c.getColumnIndex(Expenses.DATE)))
             );
             c.moveToNext();
         }
@@ -146,7 +147,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "" + e.getProductName(),
                     "" + e.getMethod(),
                     "" + e.getPrice(),
-                    "" + e.getDate(),
+                    "" + parseDateToDB(e.getDate()),
                     e.getId()});
         db.close();
     }
@@ -166,7 +167,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     c.getString(c.getColumnIndex(Expenses.PRODUCTNAME)),
                     c.getString(c.getColumnIndex(Expenses.METHOD)),
                     c.getFloat(c.getColumnIndex(Expenses.PRICE)),
-                    parseDate2(c.getString(c.getColumnIndex(Expenses.DATE)))
+                    parseDateFromDB(c.getString(c.getColumnIndex(Expenses.DATE)))
             ));
             c.moveToNext();
         }
@@ -271,8 +272,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void addBudget(Budget b){
         ContentValues values = new ContentValues();
         values.put(Budgets.ID, b.getId());
-        values.put(Budgets.DATEFROM, b.getDateFrom());
-        values.put(Budgets.DATETO, b.getDateTo());
+        values.put(Budgets.METHOD, b.getMethod());
+        values.put(Budgets.DATEFROM, parseDateToDB(b.getDateFrom()));
+        values.put(Budgets.DATETO, parseDateToDB(b.getDateTo()));
         values.put(Budgets.AMOUNT, b.getAmount());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(Budgets.TABLE_NAME, null, values);
@@ -296,8 +298,9 @@ public class DBHelper extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
         	budgets.add(new Budget(
         			c.getInt(c.getColumnIndex(Budgets.ID)),
-        			c.getString(c.getColumnIndex(Budgets.DATEFROM)),
-        			c.getString(c.getColumnIndex(Budgets.DATETO)),
+        			c.getString(c.getColumnIndex(Budgets.METHOD)),
+        			parseDateFromDB(c.getString(c.getColumnIndex(Budgets.DATEFROM))),
+        			parseDateFromDB(c.getString(c.getColumnIndex(Budgets.DATETO))),
         			c.getFloat(c.getColumnIndex(Budgets.AMOUNT))
         			));
             c.moveToNext();
@@ -316,8 +319,9 @@ public class DBHelper extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
             b = new Budget(
             		c.getInt(c.getColumnIndex(Budgets.ID)),
-        			c.getString(c.getColumnIndex(Budgets.DATEFROM)),
-        			c.getString(c.getColumnIndex(Budgets.DATETO)),
+            		c.getString(c.getColumnIndex(Budgets.METHOD)),
+        			parseDateFromDB(c.getString(c.getColumnIndex(Budgets.DATEFROM))),
+        			parseDateFromDB(c.getString(c.getColumnIndex(Budgets.DATETO))),
         			c.getFloat(c.getColumnIndex(Budgets.AMOUNT))
             );
             c.moveToNext();
@@ -331,9 +335,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE " + Budgets.TABLE_NAME +
                 " SET " + Budgets.DATEFROM + " =?, " + 
         		Budgets.DATETO + " =?, " +
+        		Budgets.METHOD + " =?, " +
                 Budgets.AMOUNT + " =? " +
         		"WHERE Budgets.ID =? ;",
-        		new Object[]{"" + budget.getDateFrom(), budget.getDateTo(), budget.getAmount(), budget.getId()});
+        		new Object[]{"" + parseDateToDB(budget.getDateFrom()), parseDateToDB(budget.getDateTo()), budget.getMethod(), budget.getAmount(), budget.getId()});
         db.close();
     }
 

@@ -3,6 +3,7 @@ package com.azucca.budgettracker.entities;
 public class Budget {
 	
 	private int id;
+	private String method;
 	private String dateFrom;
 	private String dateTo;
 	private float amount;
@@ -11,8 +12,9 @@ public class Budget {
 		
 	}
 	
-	public Budget(int id, String dateFrom, String dateTo, float amount) {
+	public Budget(int id, String method, String dateFrom, String dateTo, float amount) {
 		this.id = id;
+		this.method = method;
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
 		this.amount = amount;
@@ -20,6 +22,10 @@ public class Budget {
 
 	public int getId() {
 		return id;
+	}
+	
+	public String getMethod(){
+		return method;
 	}
 
 	public String getDateFrom() {
@@ -36,6 +42,10 @@ public class Budget {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public void setMethod(String method){
+		this.method = method;
 	}
 
 	public void setDateFrom(String dateFrom) {

@@ -168,8 +168,8 @@ public class Search extends BudgetTrackerActivity {
 	 public void searchExpenses(){		 
 		 results.removeAllViews();
 		 for(Expense e : db.searchExpenses(
-				 db.parseDate(searchFrom.getText().toString() + " 00:00"), 
-				 db.parseDate(searchTo.getText().toString() + " 23:59"))){
+				 db.parseDateFromDB(searchFrom.getText().toString() + " 00:00"), 
+				 db.parseDateFromDB(searchTo.getText().toString() + " 23:59"))){
 			 addToTable(e, -1);
 		 }
 		 updateColors();

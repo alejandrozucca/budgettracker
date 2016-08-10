@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import com.azucca.budgettracker.R;
 import com.azucca.budgettracker.db.DBHelper;
+import com.azucca.budgettracker.entities.Budget;
 import com.azucca.budgettracker.entities.Expense;
 
 import android.app.Activity;
@@ -106,6 +107,41 @@ public class BudgetTrackerActivity extends Activity {
         row.addView(price);
         row.addView(method);
         row.addView(date);
+        return row;        
+	}
+	
+	public TableRow createRow(Budget e){
+		int height = 40;
+        TextView id = new TextView(this);        
+        TextView method = new TextView(this);
+        TextView from = new TextView(this);
+        TextView to = new TextView(this);
+        TextView left = new TextView(this);
+        id.setText("" + e.getId());
+        id.setWidth(0);
+        id.setHeight(height);
+        method.setText(e.getMethod());
+        method.setWidth((int)(size.x * 0.3));
+        method.setHeight(height);
+        String f = e.getDateFrom().split(" ")[0];
+        from.setText(f.substring(0, f.length() - 5));
+        from.setWidth((int)(size.x * 0.2));
+        from.setHeight(height);
+        String t = e.getDateTo().split(" ")[0];
+        to.setText(t.substring(0, t.length() - 5));
+        to.setWidth((int)(size.x * 0.2));
+        to.setHeight(height);        
+        left.setText("" + e.getAmount());
+        left.setWidth((int)(size.x * 0.3));
+        left.setHeight(height);
+        TableRow row = new TableRow(this);
+        row.setPadding(10, 15, 10, 15);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.addView(id);
+        row.addView(method);
+        row.addView(from);
+        row.addView(to);
+        row.addView(left);
         return row;        
 	}
 	
