@@ -18,10 +18,34 @@ public class AlarmReceiver extends BroadcastReceiver {
   
     @Override
     public void onReceive(Context context, Intent intent) {    	
-    	String notificationText = null;            	
+    	String notificationText = "Parece que todavía no planificaste ningún presupuesto!";            	
     	DBHelper db = new DBHelper(context);
     	
-    	for(Budget b : db.getAllBudgets()){
+    	if(db.getAllBudgets().size() == 0){
+    		
+    		Notification.Builder mBuilder =
+			        new Notification.Builder(context)
+			        .setSmallIcon(R.drawable.buttons)
+			        .setContentTitle("BudgetTracker")
+			        .setContentText(notificationText)
+			        .setAutoCancel(true);
+			
+			Intent resultIntent = new Intent(context, Budgets.class);
+			TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+			stackBuilder.addParentStack(Budgets.class);
+			stackBuilder.addNextIntent(resultIntent);
+			PendingIntent resultPendingIntent =
+			        stackBuilder.getPendingIntent(
+			            0,
+			            PendingIntent.FLAG_UPDATE_CURRENT
+			        );
+			
+			mBuilder.setContentIntent(resultPendingIntent);
+			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.notify(0, mBuilder.build());   
+			
+    	}
+    	else for(Budget b : db.getAllBudgets()){
     		float exp = 0f;
     		for(Expense e : db.searchExpenses(b.getDateFrom(), b.getDateTo(), b.getMethod()))
     			exp += e.getPrice();
@@ -36,28 +60,28 @@ public class AlarmReceiver extends BroadcastReceiver {
     			notificationText = "No te preocupes, todavía podés seguir gastando tu presupuesto de $" + b.getAmount() + "!";
     			break;
     		}
-    	}
     	
-    	Notification.Builder mBuilder =
-		        new Notification.Builder(context)
-		        .setSmallIcon(R.drawable.buttons)
-		        .setContentTitle("BudgetTracker")
-		        .setContentText(notificationText)
-		        .setAutoCancel(true);
-		
-		Intent resultIntent = new Intent(context, Budgets.class);
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-		stackBuilder.addParentStack(Budgets.class);
-		stackBuilder.addNextIntent(resultIntent);
-		PendingIntent resultPendingIntent =
-		        stackBuilder.getPendingIntent(
-		            0,
-		            PendingIntent.FLAG_UPDATE_CURRENT
-		        );
-		
-		mBuilder.setContentIntent(resultPendingIntent);
-		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		mNotificationManager.notify(0, mBuilder.build());    		
+	    	Notification.Builder mBuilder =
+			        new Notification.Builder(context)
+			        .setSmallIcon(R.drawable.buttons)
+			        .setContentTitle("BudgetTracker")
+			        .setContentText(notificationText)
+			        .setAutoCancel(true);
+			
+			Intent resultIntent = new Intent(context, Budgets.class);
+			TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+			stackBuilder.addParentStack(Budgets.class);
+			stackBuilder.addNextIntent(resultIntent);
+			PendingIntent resultPendingIntent =
+			        stackBuilder.getPendingIntent(
+			            0,
+			            PendingIntent.FLAG_UPDATE_CURRENT
+			        );
+			
+			mBuilder.setContentIntent(resultPendingIntent);
+			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.notify(0, mBuilder.build());   
+    	}
     }
 
 }

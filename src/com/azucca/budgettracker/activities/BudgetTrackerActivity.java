@@ -17,9 +17,11 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
@@ -38,19 +40,27 @@ public class BudgetTrackerActivity extends Activity {
 	protected TableLayout results;
 	protected View selectedView = null;
     protected Expense selectedExpense = null;
-	
+    
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		if(db == null){
         	db = new DBHelper(this);       	
-        }
-		Intent alertIntent = new Intent(this,AlarmReceiver.class);
-		AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);		
-		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 
-				new GregorianCalendar().getTimeInMillis() + 5000, 
-				24 * 60 * 60 * 1000,
-				PendingIntent.getBroadcast(this, 1, alertIntent, 0));		
+        	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+	        boolean b = preferences.getBoolean("sendNotifications", false);			
+	        if(b == false){
+					Intent alertIntent = new Intent(this,AlarmReceiver.class);
+					AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);		
+					alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 
+							new GregorianCalendar().getTimeInMillis() + 5000, 
+							/*24 * 60 * 60 * 1000*/ 60000,
+							PendingIntent.getBroadcast(this, 1, alertIntent, 0));
+					SharedPreferences.Editor editor = preferences.edit();
+					editor.putBoolean("sendNotifications", true);
+					editor.apply();
+	        }
+		}
+			
         Display display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);      
