@@ -3,6 +3,7 @@ package com.azucca.budgettracker.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.azucca.budgettracker.R;
+import com.azucca.budgettracker.entities.Budget;
 import com.azucca.budgettracker.entities.Expense;
 import com.azucca.budgettracker.entities.PaymentMethod;
 
@@ -88,8 +90,26 @@ public class Expenses extends BudgetTrackerActivity {
                         getChildren(selectedView).get(4).setText(date.getText().toString().substring(0, date.getText().toString().length() - 5));
                         clear();
                         updateColors();
-                        save.setText(getResources().getString(R.string.button_add));
+                        save.setText(getResources().getString(R.string.button_add));                    
                     }
+                for(Budget e : db.getAllBudgets()){
+                	float exp = 0f;
+        			for(Expense x : db.searchExpenses(				
+        					 db.parseDateToDB(e.getDateFrom()), 
+        					 db.parseDateToDB(e.getDateTo()),
+        					 e.getMethod()
+        					))
+        				exp += x.getPrice();
+        			switch (e.getStatus(exp)){
+        			case Color.RED:
+        				sendNotification("Ya gastaste todo tu presupuesto de $" + e.getAmount() + "!");
+        				break;
+        			case Color.YELLOW:
+        				sendNotification("Cuidado, llevás gastados $" + exp + " de $" + e.getAmount() + "!");
+        				break;
+        			}
+                }
+             
             }
         });
 
@@ -243,6 +263,7 @@ public class Expenses extends BudgetTrackerActivity {
     
     private void viewExpenseList(){
         startActivity(new Intent(this, Search.class));
+        finish();
     }
 
 }

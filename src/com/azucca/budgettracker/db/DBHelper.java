@@ -175,6 +175,30 @@ public class DBHelper extends SQLiteOpenHelper {
         return expenses;
     }
     
+    public ArrayList<Expense> searchExpenses(String dateFrom, String dateTo, String method){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Expenses.TABLE_NAME  
+        		+ " WHERE " + Expenses.DATE + " >= '" + dateFrom 
+        		+ "' AND " + Expenses.DATE + " <= '" + dateTo
+        		+ "' AND " + Expenses.METHOD + " = '" + method +
+        		"' ORDER BY " + Expenses.DATE + ";",null);
+        c.moveToFirst();
+        ArrayList<Expense> expenses = new ArrayList<Expense>();
+        System.out.println("Searching: " + dateFrom + " " + dateTo);
+        while(!c.isAfterLast()){
+            expenses.add(new Expense(
+                    c.getInt(c.getColumnIndex(Expenses.ID)),
+                    c.getString(c.getColumnIndex(Expenses.PRODUCTNAME)),
+                    c.getString(c.getColumnIndex(Expenses.METHOD)),
+                    c.getFloat(c.getColumnIndex(Expenses.PRICE)),
+                    parseDateFromDB(c.getString(c.getColumnIndex(Expenses.DATE)))
+            ));
+            c.moveToNext();
+        }
+        db.close();
+        return expenses;
+    }
+    
     public int getNextPaymentId(){
         int id = 0;
         SQLiteDatabase db = getWritableDatabase();

@@ -94,7 +94,8 @@ public class Budgets extends BudgetTrackerActivity {
                     float exp = 0f;
         			for(Expense x : db.searchExpenses(				
         					 db.parseDateToDB(budgetFrom.getText().toString() + " 00:00"), 
-        					 db.parseDateToDB(budgetTo.getText().toString() + " 23:59")				
+        					 db.parseDateToDB(budgetTo.getText().toString() + " 23:59"),
+        					 e.getMethod()
         					))
         				exp += x.getPrice();
                     getChildren(selectedView).get(4).setText("" + (e.getAmount() - exp));
@@ -198,7 +199,8 @@ public class Budgets extends BudgetTrackerActivity {
 			float exp = 0f;
 			for(Expense x : db.searchExpenses(				
 					 db.parseDateToDB(e.getDateFrom()), 
-					 db.parseDateToDB(e.getDateTo())				
+					 db.parseDateToDB(e.getDateTo()),
+					 e.getMethod()
 					))
 				exp += x.getPrice();						
 	    	TableRow row = createRow(e, exp);

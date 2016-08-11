@@ -2,6 +2,7 @@ package com.azucca.budgettracker.activities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import com.azucca.budgettracker.R;
 import com.azucca.budgettracker.db.DBHelper;
@@ -9,6 +10,12 @@ import com.azucca.budgettracker.entities.Budget;
 import com.azucca.budgettracker.entities.Expense;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -30,13 +37,20 @@ public class BudgetTrackerActivity extends Activity {
 	protected String[] items;
 	protected TableLayout results;
 	protected View selectedView = null;
-    protected Expense selectedExpense = null;    
+    protected Expense selectedExpense = null;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
-		if(db == null)
-        	db = new DBHelper(this);
+		if(db == null){
+        	db = new DBHelper(this);       	
+        }
+		Intent alertIntent = new Intent(this,AlarmReceiver.class);
+		AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);		
+		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 
+				new GregorianCalendar().getTimeInMillis() + 5000, 
+				24 * 60 * 60 * 1000,
+				PendingIntent.getBroadcast(this, 1, alertIntent, 0));		
         Display display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);      
@@ -53,12 +67,15 @@ public class BudgetTrackerActivity extends Activity {
         switch (item.getItemId()) {
         case R.id.home:
         	goToHome();
+        	finish();
             return true; 
         case R.id.settings:
         	goToSettings();
+        	finish();
             return true; 
         case R.id.budgets:
         	goToBudgets();
+        	finish();
         	return true;
         }
         return false;
@@ -186,28 +203,28 @@ public class BudgetTrackerActivity extends Activity {
 		if(monthOfYear++ < 10)	month = "0" + monthOfYear;	else month = "" + monthOfYear;
 		return day + "/" + month + "/" + year;
 	}
-	/*
-	public int compareDates(String date1, String date2){
-		//Returns -1 if date1 is oldest
-		int day1 = Integer.parseInt(date1.split("/")[0]);
-		int month1 = Integer.parseInt(date1.split("/")[1]);
-		int year1 = Integer.parseInt(date1.split("/")[2]);
-		int day2 = Integer.parseInt(date2.split("/")[0]);
-		int month2 = Integer.parseInt(date2.split("/")[1]);
-		int year2 = Integer.parseInt(date2.split("/")[2]);
-		if(year1 < year2)
-			return -1; else	
-		if(year1 > year2)
-			return 1; else
-			if(month1 < month2)
-				return -1; else
-			if(month1 > month2)
-				return 1; else
-					if(day1 < day2)
-						return -1; else
-					if(day1 > day2)
-						return 1;		
-		return 0;
-	}*/
+	
+	public void sendNotification(String text){
+		Notification.Builder mBuilder =
+		        new Notification.Builder(this)
+		        .setSmallIcon(R.drawable.buttons)
+		        .setContentTitle("BudgetTracker")
+		        .setContentText(text)
+		        .setAutoCancel(true);
+		
+		Intent resultIntent = new Intent(this, Budgets.class);
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addParentStack(Budgets.class);
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent =
+		        stackBuilder.getPendingIntent(
+		            0,
+		            PendingIntent.FLAG_UPDATE_CURRENT
+		        );
+		
+		mBuilder.setContentIntent(resultPendingIntent);
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager.notify(0, mBuilder.build());
+	}
 		
 }
