@@ -1,5 +1,7 @@
 package com.azucca.budgettracker.activities;
 
+import java.util.ArrayList;
+
 import com.azucca.budgettracker.R;
 import com.azucca.budgettracker.db.DBHelper;
 import com.azucca.budgettracker.entities.Budget;
@@ -12,6 +14,7 @@ import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -21,11 +24,14 @@ public class AlarmReceiver extends BroadcastReceiver {
     	String notificationText = "Parece que todavía no planificaste ningún presupuesto!";            	
     	DBHelper db = new DBHelper(context);
     	
-    	if(db.getAllBudgets().size() == 0){
+    	ArrayList<Budget> budgets = db.getAllBudgets();
+    	
+    	if(budgets.size() == 0){
     		
     		Notification.Builder mBuilder =
 			        new Notification.Builder(context)
-			        .setSmallIcon(R.drawable.buttons)
+			        .setSmallIcon(R.drawable.money)
+			        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.moneybig))
 			        .setContentTitle("BudgetTracker")
 			        .setContentText(notificationText)
 			        .setAutoCancel(true);
@@ -42,13 +48,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 			
 			mBuilder.setContentIntent(resultPendingIntent);
 			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-			mNotificationManager.notify(0, mBuilder.build());   
+			mNotificationManager.notify(0, mBuilder.build());
+			
+			System.out.println(notificationText);
 			
     	}
-    	else for(Budget b : db.getAllBudgets()){
+    	else for(Budget b : budgets){
+    		
     		float exp = 0f;
     		for(Expense e : db.searchExpenses(b.getDateFrom(), b.getDateTo(), b.getMethod()))
     			exp += e.getPrice();
+    		
     		switch(b.getStatus(exp)){
     		case Color.RED:
     			notificationText = "Ya gastaste todo tu presupuesto de $" + b.getAmount() + "!";
@@ -63,7 +73,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     	
 	    	Notification.Builder mBuilder =
 			        new Notification.Builder(context)
-			        .setSmallIcon(R.drawable.buttons)
+			        .setSmallIcon(R.drawable.money)
+			        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.moneybig))
 			        .setContentTitle("BudgetTracker")
 			        .setContentText(notificationText)
 			        .setAutoCancel(true);
@@ -80,8 +91,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 			
 			mBuilder.setContentIntent(resultPendingIntent);
 			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-			mNotificationManager.notify(0, mBuilder.build());   
+			mNotificationManager.notify(0, mBuilder.build());
+			
+			System.out.println(notificationText);
     	}
+    	
     }
 
 }

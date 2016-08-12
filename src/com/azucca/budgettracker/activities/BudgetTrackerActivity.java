@@ -18,6 +18,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -43,21 +44,25 @@ public class BudgetTrackerActivity extends Activity {
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);
+		
 		if(db == null){
         	db = new DBHelper(this);       	
         	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 	        boolean b = preferences.getBoolean("sendNotifications", false);			
-	        if(b == false){
-					Intent alertIntent = new Intent(this,AlarmReceiver.class);
-					AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);		
-					alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 
-							new GregorianCalendar().getTimeInMillis() + 5000, 
-							/*24 * 60 * 60 * 1000*/ 60000,
-							PendingIntent.getBroadcast(this, 1, alertIntent, 0));
-					SharedPreferences.Editor editor = preferences.edit();
-					editor.putBoolean("sendNotifications", true);
-					editor.apply();
+	        if(b == false){					
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putBoolean("sendNotifications", true);
+				editor.apply();
+	        } else {
+		        Intent alertIntent = new Intent(this,AlarmReceiver.class);
+				AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);		
+				alarmManager.setInexactRepeating(
+					AlarmManager.RTC_WAKEUP, 
+					new GregorianCalendar().getTimeInMillis() + 5000, 
+					/*24 * 60 * 60 * 1000*/ 60000,
+					PendingIntent.getBroadcast(this, 1, alertIntent, 0)
+				);
 	        }
 		}
 			
@@ -217,7 +222,8 @@ public class BudgetTrackerActivity extends Activity {
 	public void sendNotification(String text){
 		Notification.Builder mBuilder =
 		        new Notification.Builder(this)
-		        .setSmallIcon(R.drawable.buttons)
+		        .setSmallIcon(R.drawable.money)
+		        .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.moneybig))
 		        .setContentTitle("BudgetTracker")
 		        .setContentText(text)
 		        .setAutoCancel(true);

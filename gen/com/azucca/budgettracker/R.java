@@ -22,7 +22,9 @@ public final class R {
         public static final int buttons=0x7f020001;
         public static final int ic_action_search=0x7f020002;
         public static final int ic_launcher=0x7f020003;
-        public static final int textfields=0x7f020004;
+        public static final int money=0x7f020004;
+        public static final int moneybig=0x7f020005;
+        public static final int textfields=0x7f020006;
     }
     public static final class id {
         public static final int add=0x7f08000c;
